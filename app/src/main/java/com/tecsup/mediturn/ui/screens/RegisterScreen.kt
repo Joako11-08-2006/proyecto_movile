@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun LoginScreen() {
+fun RegisterScreen() {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -18,10 +18,10 @@ fun LoginScreen() {
         }
     ) { padding ->
         Button(
-            onClick = { /* luego navegaremos a home */ },
+            onClick = { /* luego navegaremos a login */ },
             modifier = Modifier.padding(padding)
         ) {
-            Text("Iniciar sesión")
+            Text("Volver al Login")
         }
     }
 }
