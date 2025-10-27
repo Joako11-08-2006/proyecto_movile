@@ -3,7 +3,6 @@ package com.tecsup.mediturn.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -21,13 +20,9 @@ import com.tecsup.mediturn.model.Doctor
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    // Estado del texto de búsqueda
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
-
-    // Lista de doctores mostrada (filtrada)
     var filteredDoctors by remember { mutableStateOf(FakeRepository.doctors) }
 
-    // Cada vez que cambia la búsqueda, filtramos
     LaunchedEffect(searchQuery.text) {
         val query = searchQuery.text
         filteredDoctors = if (query.isEmpty()) {
@@ -44,7 +39,10 @@ fun HomeScreen(navController: NavController) {
         topBar = {
             TopAppBar(
                 title = { Text("MediTurn") },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF0077B6), titleContentColor = Color.White)
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF0077B6),
+                    titleContentColor = Color.White
+                )
             )
         }
     ) { padding ->
@@ -52,27 +50,55 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier
                 .padding(padding)
                 .padding(16.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Campo de búsqueda
-            OutlinedTextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                label = { Text("Buscar por nombre o especialidad") },
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(android.R.drawable.ic_menu_search),
-                        contentDescription = "Buscar"
-                    )
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
+            Column {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    label = { Text("Buscar por nombre o especialidad") },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(android.R.drawable.ic_menu_search),
+                            contentDescription = "Buscar"
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Lista de doctores filtrada
-            LazyColumn {
-                items(filteredDoctors.size) { index ->
-                    DoctorCard(filteredDoctors[index])
+                LazyColumn {
+                    items(filteredDoctors.size) { index ->
+                        DoctorCard(filteredDoctors[index])
+                    }
+                }
+            }
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(
+                    onClick = { navController.navigate("agendarCita") },
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+                ) {
+                    Text("Agendar nueva cita")
+                }
+
+                Button(
+                    onClick = { navController.navigate("misCitas") },
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+                ) {
+                    Text("Ver mis citas")
+                }
+
+                Button(
+                    onClick = { navController.navigate("profile") },
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+                ) {
+                    Text("Perfil")
                 }
             }
         }

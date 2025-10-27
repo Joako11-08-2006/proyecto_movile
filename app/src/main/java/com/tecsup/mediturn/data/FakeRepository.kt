@@ -27,6 +27,12 @@ object FakeRepository {
         )
     )
 
+    val appointments = mutableListOf<Appointment>()
+
+    fun addAppointment(appointment: Appointment) {
+        appointments.add(appointment)
+    }
+
     fun getDoctorsBySpecialty(specialty: String): List<Doctor> {
         return doctors.filter { it.specialty.contains(specialty, ignoreCase = true) }
     }
