@@ -9,13 +9,13 @@ import com.tecsup.mediturn.ui.screens.*
 @Composable
 fun NavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "login") {
-         {
-        composable("login") { Login(navController) }
-        composable("home") { HomeScreen(navController) }
-             composable("agendarCita") { AgendarCitaScreen(navController) }
-             composable("misCitas") { MisCitasScreen(navController) }
-             composable("profile") { ProfileScreen(navController) }
+        {
+            composable("login") { Login(navController) }
+            composable("home") { HomeScreen(navController) }
+            composable("agendarCita") { AgendarCitaScreen(navController) }
+            composable("misCitas") { MisCitasScreen(navController) }
+            composable("profile") { ProfileScreen(navController) }
 
-         }
+        }
     }
 }

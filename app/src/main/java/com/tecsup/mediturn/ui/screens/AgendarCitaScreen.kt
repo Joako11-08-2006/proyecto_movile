@@ -1,9 +1,11 @@
 package com.tecsup.mediturn.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.tecsup.mediturn.data.FakeRepository
@@ -12,6 +14,7 @@ import com.tecsup.mediturn.model.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgendarCitaScreen(navController: NavController) {
+    val context = LocalContext.current
     var motivo by remember { mutableStateOf("") }
 
     Scaffold(
@@ -34,12 +37,17 @@ fun AgendarCitaScreen(navController: NavController) {
 
             Button(
                 onClick = {
+                    if (motivo.isBlank()) {
+                        Toast.makeText(context, "Ingrese un motivo válido", Toast.LENGTH_SHORT).show()
+                        return@Button
+                    }
+
                     val doctor = FakeRepository.doctors.first()
                     val patient = Patient(1, "Juan Pérez", "juan@mail.com")
                     val slot = doctor.availableSlots.first()
 
                     val cita = Appointment(
-                        id = FakeRepository.appointments.size + 1,
+                        id = FakeRepository.getAppointments().size + 1,
                         doctor = doctor,
                         patient = patient,
                         slot = slot,
@@ -47,6 +55,7 @@ fun AgendarCitaScreen(navController: NavController) {
                     )
 
                     FakeRepository.addAppointment(cita)
+                    Toast.makeText(context, "Cita registrada correctamente", Toast.LENGTH_SHORT).show()
                     navController.navigate("home")
                 },
                 modifier = Modifier.fillMaxWidth()
