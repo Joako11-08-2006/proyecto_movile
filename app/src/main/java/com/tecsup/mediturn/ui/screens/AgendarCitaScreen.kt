@@ -18,7 +18,9 @@ fun AgendarCitaScreen(navController: NavController) {
     var motivo by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Agendar Cita") }) }
+        topBar = {
+            TopAppBar(title = { Text("Agendar Cita") })
+        }
     ) { padding ->
         Column(
             modifier = Modifier
@@ -42,20 +44,23 @@ fun AgendarCitaScreen(navController: NavController) {
                         return@Button
                     }
 
+                    // Obtener el primer doctor y horario disponible
                     val doctor = FakeRepository.doctors.first()
-                    val patient = Patient(1, "Juan Pérez", "juan@mail.com")
                     val slot = doctor.availableSlots.first()
 
+                    // Crear cita
                     val cita = Appointment(
                         id = FakeRepository.getAppointments().size + 1,
                         doctor = doctor,
-                        patient = patient,
                         slot = slot,
                         reason = motivo
                     )
 
+                    // Guardar cita
                     FakeRepository.addAppointment(cita)
                     Toast.makeText(context, "Cita registrada correctamente", Toast.LENGTH_SHORT).show()
+
+                    // Regresar al Home
                     navController.navigate("home")
                 },
                 modifier = Modifier.fillMaxWidth()

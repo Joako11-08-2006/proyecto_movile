@@ -1,20 +1,18 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
     namespace = "com.tecsup.mediturn"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.tecsup.mediturn"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -47,40 +45,22 @@ android {
 }
 
 dependencies {
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
+    implementation("androidx.activity:activity-compose:1.9.2")
 
-    // Core Android
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-
-    // BOM para mantener versiones compatibles entre Compose libs
     implementation(platform("androidx.compose:compose-bom:2024.09.01"))
-
-    // Jetpack Compose UI
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.foundation:foundation-layout")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material-icons-core")
-    implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.compose.runtime:runtime")
-
-    // Navigation Compose
+    implementation("androidx.compose.material3:material3:1.3.0")
     implementation("androidx.navigation:navigation-compose:2.8.3")
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
-    // Coil (para cargar imágenes desde internet)
-    implementation("io.coil-kt:coil-compose:2.4.0")
-
-    // Tests
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-
-    // Herramientas de depuración
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
